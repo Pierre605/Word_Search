@@ -6,7 +6,7 @@ grids = ['capitales', 'mers', 'pokemon', 'date', 'veritas']
 def grid_and_words():
 
 	while True:
-		input_grid_choice = input("\nChoisissez votre grille:\n\nTapez 'capitales', 'mers', 'pokemon', 'date' ou 'veritas': ")
+		input_grid_choice = input("\nChoisissez votre grille:\n\nTapez 'capitales', 'mers', 'pokemon' ou 'date': ")
 		if input_grid_choice in grids:
 			break
 

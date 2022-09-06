@@ -10,3 +10,9 @@ Résoultion par coloration des mots, avec une couleur par direction.
 >Nécéssite Python version 3.10 minimum pour faire fonctionner le module "colorist" qui permet de coloriser le rendu sur le terminal.
 
 >Installez le module "colorist" avec la commande `pip3 install colorist`
+
+Captures d'écran:
+
+![wordsearch 1](screen/word_search_screen_1.png)
+![wordsearch 2](screen/word_search_screen_2.png)
+![wordsearch 3](screen/word_search_screen_3.png)
