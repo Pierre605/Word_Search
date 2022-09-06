@@ -142,55 +142,66 @@ def check_grid():
 				bdiag[x-y-min_bdiag].append(grid2[y][x])
 
 		fdiag_stgs = []
-		coord_fdiags = []
+		bdiag_stgs = []
+		# print("bdiag_stgs:", bdiag)
 		for licht in fdiag:
 			licht = (''.join(licht))
 			fdiag_stgs.append(licht)
 		print('\n')
-		for diag in fdiag_stgs:
+		# for diag in fdiag_stgs:
+		# 	print((' ').join(diag))
+		
+		for licht in bdiag:
+			licht = (''.join(licht))
+			bdiag_stgs.append(licht)
+		print('\n')
+		for diag in bdiag_stgs:
 			print((' ').join(diag))
 		
 		fdiag_stgs_all = ('').join(fdiag_stgs)
-			# for letters in licht:
-		# print("fdiag:",fdiag_stgs)
-				# letters_licht.append(letters)
-		# for licht in bdiag:
-		# 	for letters in licht:
-		# 		letters_licht.append(letters)
-		# stg_diags = (''.join(letters_licht))
-		# for w in words_to_find:
+		bdiag_stgs_all = ('').join(bdiag_stgs)
+
 		for w in words_to_find:
 			if w in fdiag_stgs_all:
-			# 	found_words.append(w)
+				found_words.append(w)
 				fdiag_stgs_all = fdiag_stgs_all.replace(w, w.lower())
-				# else:
-				# 	fdiags_2.append(stg)
-					# coord_fdiags.append([fdiag_stgs_all.index(w), len(w)])
-					# print("fdiag_found_word:",w)
-					# print(f"coord: index_w: {fdiag_stgs_all.index(w)} len_word: {len(w)}")
+			if w[::-1] in fdiag_stgs_all:
+				fdiag_stgs_all = fdiag_stgs_all.replace(w[::-1], w[::-1].lower())
+				found_words.append(w)
+		
+		for w in words_to_find:
+			if w in bdiag_stgs_all:
+				found_words.append(w)
+				bdiag_stgs_all = bdiag_stgs_all.replace(w, w.lower())
+			if w[::-1] in bdiag_stgs_all:
+				bdiag_stgs_all = bdiag_stgs_all.replace(w[::-1], w[::-1].lower())
+				found_words.append(w)
+
+		# print("\n")
+		# print(fdiag_stgs_all)
 		print("\n")
-		print(fdiag_stgs_all)
+		print(bdiag_stgs_all)
 		print("\n")
-		temp = []
-		for x in range(0, len(fdiag_stgs_all), n):
-			temp.append([fdiag_stgs_all[x:x+n]])
 
 		new_fdiag = [[] for _ in range(n*2 - 1)]
+		new_bdiag = [[] for _ in range(n*2 - 1)]
 		
 		count = 0
 		for x in range(len(fdiag)):
 			new_fdiag[x].append(fdiag_stgs_all[count:count+len(fdiag[x])])
+			new_bdiag[x].append(bdiag_stgs_all[count:count+len(fdiag[x])])
 			count += len(fdiag[x])
-		for l in new_fdiag:
-			print(l)
+		# for l in new_bdiag:
+		# 	print(l)
 
-		print("\n")
+		# print("\n")
 
 
-		test = []
 		rebuilt_grid = []
+		rebuilt_grid_b = []
 		for x in range(n):
 			rebuilt_grid.append([])
+			rebuilt_grid_b.append([])
 
 		for y in range(n):
 			for x in range(n):
@@ -198,21 +209,50 @@ def check_grid():
 					rebuilt_grid[y].append(new_fdiag[y+x-1][0][-y])
 				else:
 					rebuilt_grid[y].append(new_fdiag[y+x-1][0][n-y])
-		# for l in rebuilt_grid[1:]:
-		# 	print(l)
-		# print("\n")
+
+		for y in range(n):
+			for x in range(n):
+				if (y+x) <= n:
+					rebuilt_grid_b[-y].append(new_bdiag[y+x-1][0][-y])
+				else:
+					rebuilt_grid_b[-y].append(new_bdiag[y+x-1][0][n-y])
 
 		last = []
+		first = []
 		
-		for x in range(n):
+		for x in range(1, n+1):
 			last.append(new_fdiag[-x][0][0])
+			first.append(new_bdiag[-x][0][0])
 		last = last[::-1]
-		# print(last)
+		first = first[::-1]
+		print(first)
+		print("\n")
 
 		rebuilt_grid.pop(0)
 		rebuilt_grid.append(last)
-		for l in rebuilt_grid:
+		rebuilt_grid_b.pop(0)
+		rebuilt_grid_b.insert(0, first)
+		for l in rebuilt_grid_b:
 			print(l)
+
+		# print('\n')
+		# diagonals_1 = []
+		# diagonals_2 = []
+		# for x in range(len(rebuilt_grid)):
+		# 	for y in rebuilt_grid[x]:
+		# 		diagonals_1.append(rebuilt_grid[x][0])
+		# 	for y in rebuilt_grid_b[x]:
+		# 		diagonals_2.append(rebuilt_grid_b[x][0])
+
+
+		# for l in stg_diagonals_1:
+		# 	if l == l.lower():
+		# 		coord_diagonals.append([stg_diagonals_1.index(w[x])])
+		# 	if w[::-1] in stg_diagonals_1:
+		# 		for x in range(len(w)):
+		# 			coord_diagonals.append([stg_diagonals_1.index(w[::-1][x])])
+		# print("found_w:", found_words)
+		# print("coord_diags:", coord_diagonals)
 
 		# for licht in rebuilt_grid:
 		# 	licht = ('  '.join(licht))
@@ -229,7 +269,7 @@ def check_grid():
 		# print("LEN STG_DIAGS:", len(stg_diags))
 		# print(stg_diags)
 		# print('\n')
-		return found_words
+		return [found_words, rebuilt_grid, rebuilt_grid_b]
 
 	# check_diagonals()
 
@@ -238,7 +278,9 @@ def check_grid():
 
 	missing = []
 	found_words = check_vertontal_and_vertical_check()[2]
-	found_words_diag = check_diagonals()
+	found_words_diag = check_diagonals()[0]
+	rebuilt_grid = check_diagonals()[1]
+	rebuilt_grid_b = check_diagonals()[2]
 	found_words.extend(found_words_diag)
 	print(found_words)
 	print("len", len(found_words))
@@ -332,7 +374,11 @@ def check_grid():
 		for y in range(n):
 			print('')
 			for x in range(n):
-				if y == coord_hor1[y][0][0] and x in range(coord_hor1[y][0][1],coord_hor1[y][0][1]+coord_hor1[y][1]):
+				if rebuilt_grid_b[y][x] == rebuilt_grid[y][x].lower():
+					print(f"{Color.YELLOW}{grid2[y][x][0].upper()}{Color.OFF}", end='  ')
+				elif rebuilt_grid[y][x] == rebuilt_grid[y][x].lower():
+					print(f"{Color.GREEN}{grid2[y][x][0].upper()}{Color.OFF}", end='  ')
+				elif y == coord_hor1[y][0][0] and x in range(coord_hor1[y][0][1],coord_hor1[y][0][1]+coord_hor1[y][1]):
 					print(f"{Color.RED}{grid2[y][x][0]}{Color.OFF}", end='  ')
 				elif y == coord_hor2[y][0][0] and x in range(coord_hor2[y][0][1],coord_hor2[y][0][1]+coord_hor2[y][1]):
 					print(f"{Color.RED}{grid2[y][x][0]}{Color.OFF}", end='  ')
