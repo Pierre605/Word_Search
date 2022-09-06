@@ -1,22 +1,22 @@
-from re import L
-import numpy as np
 import math
-from colorist import Color, red, blue, white, green, black, yellow, magenta, cyan
-import time
+from colorist import Color, Effect, red, blue, white, green, black, yellow, magenta, cyan
 
-file_words = open("capitals_names.dic")
-file_grid = open("capitals_grid.dic")
-grid = []
-grid2 = []
+grids = ['capitals', 'seas', 'pokemon']
 
+def grid_and_words():
 
-L3 = []
-L4 = []
-content_grid = file_grid.readlines()
-hidden_words = file_words.readlines()
+	while True:
+		input_grid_choice = input("\nChoisissez votre grille:\n\nTapez 'capitals', 'seas' ou 'pokemon': ")
+		if input_grid_choice in grids:
+			break
 
+	file_grid = open(f"{input_grid_choice}_grid.dic")
+	file_words = open(f"{input_grid_choice}_names.dic")
 
-def grid_lists():
+	grid = []
+	grid2 = []
+
+	content_grid = file_grid.readlines()
 	for line in content_grid:
 		grid.append([line.replace("\n", "")])
 
@@ -24,24 +24,23 @@ def grid_lists():
 		grid2.append([])
 		for y in range(len(grid)):
 			grid2[x].append(grid[x][0][y])
-	return [grid, grid2]
-
-
-def words_list():
+	
+	hidden_words = file_words.readlines()
 	words_to_find = []
+	print("\nMots à trouver:\n")
 	for w in hidden_words:
 		words_to_find.append(w.replace("\n", ""))
 		print(w.replace("\n", ""))
-	print("Nombre de mots:", len(words_to_find))
+	print("\nNombre de mots:", len(words_to_find))
 	print('\n')
-	return words_to_find
+	return [grid, grid2, words_to_find]
 
 
 def check_grid():
-	grids = grid_lists()
+	grids = grid_and_words()
 	grid = grids[0]
 	grid2 = grids[1]
-	words_to_find = words_list()
+	words_to_find = grids[2]
 	n = len(grid)
 
 	def check_vertontal_and_vertical_check():
@@ -60,8 +59,7 @@ def check_grid():
 				horizontals.append(letter)
 		stg_horizontals = ("").join(horizontals)
 		stg_verticals = ("").join(verticals)
-		stg_hor_ver = stg_horizontals + stg_verticals
-		print("LEN STG:", len(stg_horizontals))
+		# print("LEN STG:", len(stg_horizontals))
 		for w in words_to_find:
 			if w in stg_horizontals:
 				found_words.append(w)
@@ -89,13 +87,8 @@ def check_grid():
 				# print("coord:", coord_vert[-1])
 				# print("ind_vert:", stg_verticals.index(w[::-1]), len(w))
 
-				# stg_hor_ver = stg_hor_ver.replace(w[::-1], f"{Color.BLUE}{w[::-1]}{Color.OFF}")
-		print("mots trouves vert et vert:", found_words)
-
-
+		# print("mots trouves vert et vert:", found_words)
 		return [coord_hor, coord_vert, found_words]
-
-# check_vertontal_and_vertical_check()
 
 
 	def check_diagonals():
@@ -147,16 +140,16 @@ def check_grid():
 		for licht in fdiag:
 			licht = (''.join(licht))
 			fdiag_stgs.append(licht)
-		print('\n')
+		# print('\n')
 		# for diag in fdiag_stgs:
 		# 	print((' ').join(diag))
 		
 		for licht in bdiag:
 			licht = (''.join(licht))
 			bdiag_stgs.append(licht)
-		print('\n')
-		for diag in bdiag_stgs:
-			print((' ').join(diag))
+		# print('\n')
+		# for diag in bdiag_stgs:
+		# 	print((' ').join(diag))
 		
 		fdiag_stgs_all = ('').join(fdiag_stgs)
 		bdiag_stgs_all = ('').join(bdiag_stgs)
@@ -179,9 +172,9 @@ def check_grid():
 
 		# print("\n")
 		# print(fdiag_stgs_all)
-		print("\n")
-		print(bdiag_stgs_all)
-		print("\n")
+		# print("\n")
+		# print(bdiag_stgs_all)
+		# print("\n")
 
 		new_fdiag = [[] for _ in range(n*2 - 1)]
 		new_bdiag = [[] for _ in range(n*2 - 1)]
@@ -225,50 +218,18 @@ def check_grid():
 			first.append(new_bdiag[-x][0][0])
 		last = last[::-1]
 		first = first[::-1]
-		print(first)
-		print("\n")
+		# print(first)
+		# print("\n")
 
 		rebuilt_grid.pop(0)
 		rebuilt_grid.append(last)
 		rebuilt_grid_b.pop(0)
 		rebuilt_grid_b.insert(0, first)
-		for l in rebuilt_grid_b:
-			print(l)
-
-		# print('\n')
-		# diagonals_1 = []
-		# diagonals_2 = []
-		# for x in range(len(rebuilt_grid)):
-		# 	for y in rebuilt_grid[x]:
-		# 		diagonals_1.append(rebuilt_grid[x][0])
-		# 	for y in rebuilt_grid_b[x]:
-		# 		diagonals_2.append(rebuilt_grid_b[x][0])
-
-
-		# for l in stg_diagonals_1:
-		# 	if l == l.lower():
-		# 		coord_diagonals.append([stg_diagonals_1.index(w[x])])
-		# 	if w[::-1] in stg_diagonals_1:
-		# 		for x in range(len(w)):
-		# 			coord_diagonals.append([stg_diagonals_1.index(w[::-1][x])])
-		# print("found_w:", found_words)
-		# print("coord_diags:", coord_diagonals)
-
-		# for licht in rebuilt_grid:
-		# 	licht = ('  '.join(licht))
-		# 	print(licht)
-
-		# 		stg_diags = stg_diags.replace(w, w.lower())
-		# 	if w[::-1] in stg_diags:
-		# 		found_words.append(w)
-		# 		print("diag:", w)
-		# 		stg_diags = stg_diags.replace(w[::-1], w.lower())
-		
-		print("mots trouves_diag:", len(found_words))
-		print("\n")
-		# print("LEN STG_DIAGS:", len(stg_diags))
-		# print(stg_diags)
-		# print('\n')
+		# for l in rebuilt_grid_b:
+		# 	print(l)
+	
+		# print("mots trouves_diag:", len(found_words))
+		# print("\n")
 		return [found_words, rebuilt_grid, rebuilt_grid_b]
 
 	# check_diagonals()
@@ -282,17 +243,22 @@ def check_grid():
 	rebuilt_grid = check_diagonals()[1]
 	rebuilt_grid_b = check_diagonals()[2]
 	found_words.extend(found_words_diag)
-	print(found_words)
-	print("len", len(found_words))
-	print("\n")
+	# print(found_words)
+	# print("len", len(found_words))
+	# print("\n")
 	for w in words_to_find:
 		if w not in found_words:
 			missing.append(w)
-	print("missing word:", missing)
 
-	print("vertical:", coord_vert)
+	if len(found_words) > len(words_to_find):
+		len_found_words_no_double = len(words_to_find)
+		print(f"Mots trouvés par l'algorythme: {len_found_words_no_double} /{len(words_to_find)}")
+	else:
+		print(f"Mots trouvés par l'algorythme: {len(found_words)} /{len(words_to_find)}")
+
+	# print("vertical:", coord_vert)
 	print("\n")
-	print("horizon:", coord_hor)
+	# print("horizon:", coord_hor)
 	len_index_hor = len(coord_hor)
 	len_index_vert = len(coord_vert)
 	coord_hor1 = []
@@ -308,7 +274,7 @@ def check_grid():
 		# print(elem)
 		elem[0] = [math.floor(elem[0]/n), elem[0]%n]
 		# print(elem)
-	print("\n")
+	# print("\n")
 	for x in range(n-len(coord_hor)):
 		coord_hor.append([[0, 0], 0])
 	# print("coord_hor:", coord_hor)
@@ -325,27 +291,14 @@ def check_grid():
 		coord_hor2.append([[0, 0], 0])
 		coord_vert2.append([[0, 0], 0])
 
-	# print("coord_hor2:", coord_hor2)
-	# print("\n")
-	# print("coord_vert2:", coord_vert2)
-	# print("\n")
-
-	
-
 	for x in range(len_index_hor):
 		if coord_hor[coord_hor[x][0][0]] != x:
 			coord_hor1[coord_hor[x][0][0]] = coord_hor[x]
-			
-		# if coord_hor[x][0][0] != coord_hor[coord_hor[x][0][0]][0][0]:
-		# 	coord_hor[coord_hor[x][0][0]] = coord_hor[x]
-		# 	print('yes')
 
 	for x in range(len_index_vert):
-		# if coord_hor[coord_hor[x][0][0]] != 300:
-		# 	print(coord_hor[coord_hor[x][0][0]])
 		if coord_vert[coord_vert[x][0][0]] != x:
 			coord_vert1[coord_vert[x][0][0]] = coord_vert[x]
-			# print('yes')
+
 	# print("coord_hor1:" , coord_hor1)
 	# print("len:", len(coord_hor1))
 	# print("\n")
@@ -355,11 +308,9 @@ def check_grid():
 
 	for x in range(len_index_vert):
 		if coord_vert[x][0][0] == coord_vert1[coord_vert[x][0][0]][0][0] and coord_vert[x][0][1] != coord_vert1[coord_vert[x][0][0]][0][1]:
-			# print("yes", coord_vert1[coord_vert[x][0][0]])
 			coord_vert2[coord_vert[x][0][0]] = coord_vert[x]
 	for x in range(len_index_hor):
 		if coord_hor[x][0][0] == coord_hor1[coord_hor[x][0][0]][0][0] and coord_hor[x][0][1] != coord_hor1[coord_hor[x][0][0]][0][1]:
-			# print("yes", coord_hor1[coord_hor[x][0][0]])
 			coord_hor2[coord_hor[x][0][0]] = coord_hor[x]
 			
 
@@ -367,27 +318,46 @@ def check_grid():
 	# print("coord_hor2_sup:" , coord_hor2)
 	# print("len:", len(coord_hor2))
 	# print("\n")
-	print("coord_vert2:" , coord_vert2)
-	print("len:", len(coord_vert2))
+	# print("coord_vert2:" , coord_vert2)
+	# print("len:", len(coord_vert2))
 	# print(grid2)
 	def display_resolved_grid():
 		for y in range(n):
 			print('')
 			for x in range(n):
-				if rebuilt_grid_b[y][x] == rebuilt_grid[y][x].lower():
-					print(f"{Color.YELLOW}{grid2[y][x][0].upper()}{Color.OFF}", end='  ')
-				elif rebuilt_grid[y][x] == rebuilt_grid[y][x].lower():
-					print(f"{Color.GREEN}{grid2[y][x][0].upper()}{Color.OFF}", end='  ')
-				elif y == coord_hor1[y][0][0] and x in range(coord_hor1[y][0][1],coord_hor1[y][0][1]+coord_hor1[y][1]):
-					print(f"{Color.RED}{grid2[y][x][0]}{Color.OFF}", end='  ')
-				elif y == coord_hor2[y][0][0] and x in range(coord_hor2[y][0][1],coord_hor2[y][0][1]+coord_hor2[y][1]):
-					print(f"{Color.RED}{grid2[y][x][0]}{Color.OFF}", end='  ')
-				elif x == coord_vert1[x][0][0] and y in range(coord_vert1[x][0][1],coord_vert1[x][0][1]+coord_vert1[x][1]):
-					print(f"{Color.BLUE}{grid2[y][x][0]}{Color.OFF}", end='  ')
-				elif x == coord_vert2[x][0][0] and y in range(coord_vert2[x][0][1],coord_vert2[x][0][1]+coord_vert2[x][1]):
-					print(f"{Color.BLUE}{grid2[y][x][0]}{Color.OFF}", end='  ')
-				else:
-					print(grid2[y][x][0], end='  ')
+				print(grid2[y][x][0], end='  ')
+
+		print("\n")
+
+		while True:
+			input_reveal_grid = input("\nRévéler la grille? Taper 'o' pour oui: ")
+			if input_reveal_grid == 'o':
+				for y in range(n):
+					print('')
+					for x in range(n):
+						if y == coord_hor1[y][0][0] and x in range(coord_hor1[y][0][1],coord_hor1[y][0][1]+coord_hor1[y][1]):
+							print(f"{Color.RED}{grid2[y][x][0]}{Color.OFF}", end='  ')
+						elif y == coord_hor2[y][0][0] and x in range(coord_hor2[y][0][1],coord_hor2[y][0][1]+coord_hor2[y][1]):
+							print(f"{Color.RED}{grid2[y][x][0]}{Color.OFF}", end='  ')
+						elif x == coord_vert1[x][0][0] and y in range(coord_vert1[x][0][1],coord_vert1[x][0][1]+coord_vert1[x][1]):
+							print(f"{Color.BLUE}{grid2[y][x][0]}{Color.OFF}", end='  ')
+						elif x == coord_vert2[x][0][0] and y in range(coord_vert2[x][0][1],coord_vert2[x][0][1]+coord_vert2[x][1]):
+							print(f"{Color.BLUE}{grid2[y][x][0]}{Color.OFF}", end='  ')
+						elif rebuilt_grid_b[y][x] == rebuilt_grid[y][x].lower():
+							print(f"{Color.YELLOW}{Effect.BLINK}{grid2[y][x][0].upper()}{Effect.BLINK_OFF}{Color.OFF}", end='  ')
+						elif rebuilt_grid[y][x] == rebuilt_grid[y][x].lower():
+							print(f"{Color.GREEN}{Effect.BLINK}{grid2[y][x][0].upper()}{Effect.BLINK_OFF}{Color.OFF}", end='  ')
+						else:
+							print(grid2[y][x][0], end='  ')
+				print("\n\nEt voilà !")
+				break
+		input_play_again = input("\nUne autre grille? 'o' pour oui, 'n' pour non: ")
+		print('\n')
+		if input_play_again == 'o':
+			check_grid()
+		else:
+			print("AU REVOIR...\n\n")
+
 
 	display_resolved_grid()
 
