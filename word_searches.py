@@ -1,17 +1,17 @@
 import math
 from colorist import Color, Effect, red, blue, white, green, black, yellow, magenta, cyan
 
-grids = ['capitals', 'seas', 'pokemon']
+grids = ['capitales', 'mers', 'pokemon', 'date', 'veritas']
 
 def grid_and_words():
 
 	while True:
-		input_grid_choice = input("\nChoisissez votre grille:\n\nTapez 'capitals', 'seas' ou 'pokemon': ")
+		input_grid_choice = input("\nChoisissez votre grille:\n\nTapez 'capitales', 'mers', 'pokemon', 'date' ou 'veritas': ")
 		if input_grid_choice in grids:
 			break
 
-	file_grid = open(f"{input_grid_choice}_grid.dic")
-	file_words = open(f"{input_grid_choice}_names.dic")
+	file_grid = open(f"assets/{input_grid_choice}_grid.dic")
+	file_words = open(f"assets/{input_grid_choice}_names.dic")
 
 	grid = []
 	grid2 = []
