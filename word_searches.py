@@ -12,8 +12,8 @@ def grid_and_words():
 		if input_grid_choice in grids:
 			break
 
-	file_grid = open(f"assets/{input_grid_choice}_grid.dic")
-	file_words = open(f"assets/{input_grid_choice}_names.dic")
+	file_grid = open(f"grilles/{input_grid_choice}_grid.dic")
+	file_words = open(f"grilles/{input_grid_choice}_names.dic")
 
 	grid = []
 	grid2 = []

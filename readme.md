@@ -15,4 +15,3 @@ Captures d'écran:
 
 ![wordsearch 1](screen/word_search_screen_1.png)
 ![wordsearch 2](screen/word_search_screen_2.png)
-![wordsearch 3](screen/word_search_screen_3.png)
