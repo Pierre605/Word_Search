@@ -8,3 +8,4 @@ title = rf'''
  | |___| |___ ___) | {Color.CYAN}| |  | |{Color.OFF} |_| |{Color.GREEN}| |{Color.OFF}  ___) | {Color.RED}| |  | |{Color.OFF} |___{Color.YELLOW}| |___{Color.OFF}| |___ ___) |
  |_____|_____|____/  {Color.CYAN}|_|  |_|{Color.OFF}\___/ {Color.GREEN}|_|{Color.OFF} |____/  {Color.RED}|_|  |_|{Color.OFF}_____{Color.YELLOW}|_____|{Color.OFF}_____|____/ 
                                                                                   {Color.BLUE}Pierre605{Color.OFF}'''
+
